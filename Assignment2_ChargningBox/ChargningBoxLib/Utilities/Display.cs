@@ -17,8 +17,7 @@ namespace ChargningBoxLib.Utilities
         public void ScanRFID(){
             Console.WriteLine("Charging box is locked and phone is charging. Use your RFID tag to unlock.");
         }
-        
-        // P
+    
         public void PhoneNotDetected(){
             Console.WriteLine("Phone is not connected. Try again.");
         }
