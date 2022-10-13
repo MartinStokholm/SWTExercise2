@@ -9,10 +9,13 @@ namespace ChargningBoxLib.Utilities
 {
     public class RFIDReader: IRFIDReader
     {
+        public event EventHandler<RfidDetectedChangedEventArgs> RfidDetectedChangedEvent;
+
         public void ReadRFID(int id)
         {
             //StationControl.RfidDetected(id);
         }
+
 
     }
 }

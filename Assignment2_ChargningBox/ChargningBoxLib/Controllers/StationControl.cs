@@ -28,6 +28,13 @@ namespace ChargningBoxLib.Controllers
         private ILogFile _logfile;
         private IDisplay _display;
 
+
+        // event variabler
+        public bool doorOpenClose;
+
+        public int rfidDetected;
+
+        public double currentValue;
         //private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
         // Her mangler constructor
@@ -41,12 +48,12 @@ namespace ChargningBoxLib.Controllers
         }
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
-        public void RfidDetected(int id)
+        public void RfidDetected()
         {
             switch (_state)
             {
                 case LadeskabState.Available:
-                    Availability(id);
+                    Availability(rfidDetected);
                     break;
 
                 case LadeskabState.DoorOpen:
@@ -54,7 +61,7 @@ namespace ChargningBoxLib.Controllers
                     break;
 
                 case LadeskabState.Locked:
-                    CheckLocked(id);
+                    CheckLocked(rfidDetected);
                     break;
             }
         }
@@ -96,24 +103,49 @@ namespace ChargningBoxLib.Controllers
 
         }
 
+        private void CheckOpenClosed()
+        {
+            if (doorOpenClose)
+                DoorOpened();
+            else 
+                DoorClosed();
 
-        // Her mangler de andre trigger handlere
+        }
+
+      
+        private void HandleDoorOpenCloseEvent(object sender, DoorOpenCloseEventArgs e)
+        {
+            doorOpenClose = e.DoorOpenClose;
+            CheckOpenClosed();
+        }
+
+        private void HandleRfidDetectedEvent(object sender, RfidDetectedChangedEventArgs e)
+        {
+            rfidDetected = e.RfidDetected;
+        }
+
+        
+        private void HandleCurrentEvent(object sender, CurrentEventArgs e)
+        {
+            currentValue = e.Current;
+        }
 
         #region Door funcionality
         private void DoorOpened()
         {
-
+            _display.ConnectPhone();
         }
 
         private void DoorClosed()
         {
-
+            _display.ScanRFID();
         }
 
         private void LockDoor()
         {
-
+            _display.ChargingBoxBusy();
         }
+
         #endregion
 
         #region Booleans

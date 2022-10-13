@@ -12,6 +12,7 @@ namespace ChargningBoxLib.Interfaces
         public void DoorClosed();
         public void RfidDetected(string id);
         public void CheckId(string oldid, string id);
+        
 
     }
 }

@@ -6,12 +6,17 @@ using System.Threading.Tasks;
 
 namespace ChargningBoxLib.Interfaces
 {
+    public class DoorOpenCloseEventArgs : EventArgs
+    {
+        public bool DoorOpenClose { get; set; }
+    }
+
     public interface IDoor
     {
         public void UnlockDoor();
         public void LockDoor();
 
-
+        event EventHandler<DoorOpenCloseEventArgs> DoorOpenCloseEvent;
 
     }
 }
