@@ -13,9 +13,13 @@ namespace ChargningBoxLib.Utilities
 
         public void ReadRFID(int id)
         {
+            OnReadRFID(new RfidDetectedChangedEventArgs { RfidDetected = id });
             //StationControl.RfidDetected(id);
         }
 
+        protected virtual void OnReadRFID(RfidDetectedChangedEventArgs e) {
+            RfidDetectedChangedEvent?.Invoke(this, e);
+        }
 
     }
 }

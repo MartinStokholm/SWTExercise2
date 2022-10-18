@@ -1,8 +1,15 @@
-﻿    class Program
+﻿using ChargningBoxLib.Controllers;
+using ChargningBoxLib.Interfaces;
+using ChargningBoxLib.Utilities;
+using System;
+class Program
     {
         static void Main(string[] args)
         {
 				// Assemble your system here from all the classes
+            IDoor door = new Door();
+            IRFIDReader rfidReader = new RFIDReader();
+            StationControl st = new StationControl(new ChargeControl(), door,new LogFile(), new Display(), rfidReader);
 
             bool finish = false;
             do
@@ -19,19 +26,25 @@
                         break;
 
                     case 'O':
-                        door.OnDoorOpen();
+                        // Should we take a id for which RFID onlocks the door?
+                        door.SetDoorState(true);
+                        //door.UnlockDoor();
+                        // door.OnDoorOpen();
                         break;
 
                     case 'C':
-                        door.OnDoorClose();
+                        door.SetDoorState(false);
+                        //door.OnDoorClose();
                         break;
 
                     case 'R':
                         System.Console.WriteLine("Indtast RFID id: ");
-                        string idString = System.Console.ReadLine();
+                        string idString = Console.ReadLine();
 
                         int id = Convert.ToInt32(idString);
-                        rfidReader.OnRfidRead(id);
+                        rfidReader.ReadRFID(id);
+                        //rfidReader.OnRfidRead(id);
+
                         break;
 
                     default:
@@ -41,4 +54,4 @@
             } while (!finish);
         }
     }
-}
+

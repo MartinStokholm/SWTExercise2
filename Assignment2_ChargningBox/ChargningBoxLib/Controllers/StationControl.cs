@@ -27,21 +27,29 @@ namespace ChargningBoxLib.Controllers
         private IDoor _door;
         private ILogFile _logfile;
         private IDisplay _display;
+        private IRFIDReader _rfidReader;
 
 
-        // event variabler
+        // Event Variables
         public bool doorOpenClose;
 
         public int rfidDetected;
 
-        public double currentValue;
+        
         //private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
         // Her mangler constructor
-        public StationControl(IChargeControl charger, IDoor door, ILogFile logfile, IDisplay display)
+        public StationControl(IChargeControl charger, IDoor door, ILogFile logfile, IDisplay display, IRFIDReader rfidReader)
         {
-            _charger = charger;
+            door.DoorOpenCloseEvent += HandleDoorOpenCloseEvent;
             _door = door;
+
+            rfidReader.RfidDetectedChangedEvent += HandleRfidDetectedEvent;
+            _rfidReader = rfidReader;
+
+            
+            _charger = charger;
+            
             _state = LadeskabState.Available;
             _logfile = logfile;
             _display = display;
@@ -122,13 +130,9 @@ namespace ChargningBoxLib.Controllers
         private void HandleRfidDetectedEvent(object sender, RfidDetectedChangedEventArgs e)
         {
             rfidDetected = e.RfidDetected;
+            RfidDetected();
         }
 
-        
-        private void HandleCurrentEvent(object sender, CurrentEventArgs e)
-        {
-            currentValue = e.Current;
-        }
 
         #region Door funcionality
         private void DoorOpened()
