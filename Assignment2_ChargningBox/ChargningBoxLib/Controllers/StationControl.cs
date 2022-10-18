@@ -117,10 +117,9 @@ namespace ChargningBoxLib.Controllers
                 DoorOpened();
             else 
                 DoorClosed();
-
         }
 
-      
+        #region Events
         private void HandleDoorOpenCloseEvent(object sender, DoorOpenCloseEventArgs e)
         {
             doorOpenClose = e.DoorOpenClose;
@@ -132,17 +131,20 @@ namespace ChargningBoxLib.Controllers
             rfidDetected = e.RfidDetected;
             RfidDetected();
         }
+        #endregion
 
 
         #region Door funcionality
         private void DoorOpened()
         {
             _display.ConnectPhone();
+            _charger.IsConnected = true;
         }
 
         private void DoorClosed()
         {
             _display.ScanRFID();
+            _charger.IsConnected = false;
         }
 
         private void LockDoor()

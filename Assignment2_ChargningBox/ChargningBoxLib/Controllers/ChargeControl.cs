@@ -18,11 +18,11 @@ namespace ChargningBoxLib.Controllers
 
         public void StartCharge(){
             Console.WriteLine("Phone is charging");
-            
+            IsConnected = true;
         }
         public void StopCharge(){
             Console.WriteLine("Charging has stopped");
-
+            IsConnected = false;
         }
         public ChargeControl() {
             IsConnected = false;
