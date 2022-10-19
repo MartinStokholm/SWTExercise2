@@ -10,8 +10,14 @@ namespace ChargningBoxLib.Utilities
 {
     public class LogFile: ILogFile
     {
-        
-        public LogFile(){
+
+        // Can find it in the file SWTExercise2\Assignment2_ChargningBox\ChargingBoxSimpleApp\bin\Debug\net6.0
+     
+        //We can change it if we want to by using the following
+        //string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+        public LogFile()
+        {
         }
 
         public void LogDoorLocked(string id)
@@ -19,13 +25,13 @@ namespace ChargningBoxLib.Utilities
             //timestamp, id, door locked
             using (StreamWriter w = File.AppendText("log.txt"))
             {
+                w.AutoFlush = true;
                 w.Write("\r\nLog Entry : ");
                 w.WriteLine($"{DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()}");
                 w.WriteLine($"  :Door locked by id: {id}");
                 w.WriteLine("-------------------------------");
             }
-            
-            
+        
         }
         public void LogDoorUnlocked(string id)
         {
@@ -38,5 +44,4 @@ namespace ChargningBoxLib.Utilities
             }
         }
     }
-
 }
