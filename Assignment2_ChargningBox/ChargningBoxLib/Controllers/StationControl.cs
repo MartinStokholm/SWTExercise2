@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ChargningBoxLib.Interfaces;
-using ChargningBoxLib.Simulators;
+﻿using ChargningBoxLib.Interfaces;
 //using Ladeskab.Interfaces;
 
 namespace ChargningBoxLib.Controllers
@@ -31,9 +24,8 @@ namespace ChargningBoxLib.Controllers
 
 
         // Event Variables
-        public bool doorOpenClose;
-
-        public int rfidDetected;
+        public DoorState _doorEvent { get;  private set; }
+        public int _rfidEvent { get;  private set; }
 
         
         //private string logFile = "logfile.txt"; // Navnet på systemets log-fil
@@ -60,7 +52,7 @@ namespace ChargningBoxLib.Controllers
             switch (_state)
             {
                 case LadeskabState.Available:
-                    Availability(rfidDetected);
+                    Availability(_rfidEvent);
                     break;
 
                 case LadeskabState.DoorOpen:
@@ -68,7 +60,7 @@ namespace ChargningBoxLib.Controllers
                     break;
 
                 case LadeskabState.Locked:
-                    CheckLocked(rfidDetected);
+                    CheckLocked(_rfidEvent);
                     break;
             }
         }
@@ -84,7 +76,7 @@ namespace ChargningBoxLib.Controllers
             else
             {
                 _charger.StartCharge();
-                _door.LockDoor();
+                //_door.LockDoor();
                 _oldId = id;
                 _state = LadeskabState.Locked;
                 _logfile.LogDoorLocked(id.ToString());
@@ -102,7 +94,7 @@ namespace ChargningBoxLib.Controllers
             else
             {
                 _charger.StopCharge();
-                _door.UnlockDoor();
+                //_door.UnlockDoor();
                 _logfile.LogDoorUnlocked(id.ToString());
                 _display.RemovePhone();
                 _state = LadeskabState.Available;
@@ -112,22 +104,26 @@ namespace ChargningBoxLib.Controllers
 
         private void CheckOpenClosed()
         {
-            if (doorOpenClose)
+            if (_doorEvent == DoorState.Unlocked) { 
                 DoorOpened();
-            else 
+                //_state = LadeskabState.DoorOpen;
+            }
+            else { 
                 DoorClosed();
+                //_state = LadeskabState.Available;
+            }
         }
 
         #region Events
         private void HandleDoorOpenCloseEvent(object sender, DoorOpenCloseEventArgs e)
         {
-            doorOpenClose = e.DoorOpenClose;
+            _doorEvent = e.DoorEvent;
             CheckOpenClosed();
         }
 
         private void HandleRfidDetectedEvent(object sender, RfidDetectedChangedEventArgs e)
         {
-            rfidDetected = e.RfidDetected;
+            _rfidEvent = e.RfidDetected;
             RfidDetected();
         }
         #endregion

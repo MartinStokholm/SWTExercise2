@@ -1,47 +1,51 @@
 using NUnit.Framework;
 using ChargningBoxLib.Interfaces;
 using ChargningBoxLib.Utilities;
+using NSubstitute;
+using static ChargningBoxLib.Utilities.Door;
 
 namespace ChargingBoxTest
 {
-    public class Tests
+    public class TestDoor
     {
         private IDoor _uut;
+        private DoorOpenCloseEventArgs _receivedEventArgs;
+        
         [SetUp]
         public void Setup()
         {
             _uut = new Door();
-        }
-
-        [Test]
-        public void Test1()
-        {
-            Assert.Pass();
-        }
-
-        [Test]
-        public void Started_Simulate() {
-            ManualResetEvent pause = new ManualResetEvent(false);
-            bool lastValue = false;
+            _uut.SetDoorState(DoorState.Locked);
 
             _uut.DoorOpenCloseEvent += (o, args) => {
-                lastValue = args.DoorOpenClose;
-                pause.Set();
+                _receivedEventArgs = args;
             };
+        }
 
-            // Start
-            _uut.SetDoorState(true);
 
-            // Next value should be high
-            _uut.SetDoorState(false);
+        [Test]
+        public void SetDoorState_DoorEventSetToUnlocked_EventFired() {
+        _uut.SetDoorState(DoorState.Unlocked);
+            Assert.That(_receivedEventArgs, Is.Not.Null);
+        }
 
-            // Reset event
-            pause.Reset();
+        [Test]
+        public void SetDoorState_DoorEventSetToLocked_EventNotFired() {
+            _uut.SetDoorState(DoorState.Locked);
+            Assert.That(_receivedEventArgs, Is.Null);
+        }
 
-            // Wait for next tick, should send overloaded value
-            pause.WaitOne(300);
+        [Test]
+        public void SetDoorState_DoorEventSetToUnlocked_CorrectNewDoorState() {
+            _uut.SetDoorState(DoorState.Unlocked);
+            Assert.That(_receivedEventArgs.DoorEvent, Is.EqualTo(DoorState.Unlocked));
+        }
 
-            Assert.That(lastValue, Is.EqualTo(false));
+        [Test]
+        public void SetDoorState_DoorEventSetToLocked_CorrectNewDoorState() {
+            _uut.SetDoorState(DoorState.Unlocked);
+            _uut.SetDoorState(DoorState.Locked);
+            Assert.That(_receivedEventArgs.DoorEvent, Is.EqualTo(DoorState.Locked));
         }
     }
 }

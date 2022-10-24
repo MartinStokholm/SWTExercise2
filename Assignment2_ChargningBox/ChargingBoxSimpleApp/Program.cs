@@ -9,7 +9,7 @@ class Program
 				// Assemble your system here from all the classes
             IDoor door = new Door();
             IRFIDReader rfidReader = new RFIDReader();
-            StationControl st = new StationControl(new ChargeControl(), door,new LogFile(), new Display(), rfidReader);
+            StationControl st = new StationControl(new ChargeControl(), door, new LogFile(), new Display(), rfidReader);
 
             bool finish = false;
             do
@@ -27,13 +27,13 @@ class Program
 
                     case 'O':
                         // Should we take a id for which RFID onlocks the door?
-                        door.SetDoorState(true);
+                        door.SetDoorState(DoorState.Unlocked);
                         //door.UnlockDoor();
                         // door.OnDoorOpen();
                         break;
 
                     case 'C':
-                        door.SetDoorState(false);
+                        door.SetDoorState(DoorState.Locked);
                         //door.OnDoorClose();
                         break;
 

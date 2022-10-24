@@ -8,18 +8,20 @@ using ChargningBoxLib.Interfaces;
 
 namespace ChargningBoxLib.Utilities
 {
+
+
     public class Door : IDoor 
     {
         public event EventHandler<DoorOpenCloseEventArgs>? DoorOpenCloseEvent;
         
         //Open Close function
-        private bool _oldDoorState;
-        public void SetDoorState(bool newDoorState)
+        private DoorState _doorState;
+        public void SetDoorState(DoorState newDoorState)
         {
-            if (newDoorState != _oldDoorState)
+            if (newDoorState != _doorState)
             {
-                OnDoorOpenClose(new DoorOpenCloseEventArgs { DoorOpenClose = newDoorState });
-                _oldDoorState = newDoorState;
+                OnDoorOpenClose(new DoorOpenCloseEventArgs { DoorEvent = newDoorState });
+                _doorState = newDoorState;
             }
         }
 
@@ -28,29 +30,21 @@ namespace ChargningBoxLib.Utilities
                 DoorOpenCloseEvent?.Invoke(this, e);
         }
 
-        DoorState _doorState;
-
-        enum DoorState
-        {
-            Locked,
-            Unlocked
-        }
-
         public Door()
         {
 
             _doorState = DoorState.Unlocked;
         }
 
-        public void UnlockDoor()
-        {
-            _doorState = DoorState.Unlocked;
-        }
+        //public void UnlockDoor()
+        //{
+        //    _doorState = DoorState.Unlocked;
+        //}
 
-        public void LockDoor()
-        {
-            _doorState = DoorState.Locked;
-        }
+        //public void LockDoor()
+        //{
+        //    _doorState = DoorState.Locked;
+        //}
 
     }
 }
