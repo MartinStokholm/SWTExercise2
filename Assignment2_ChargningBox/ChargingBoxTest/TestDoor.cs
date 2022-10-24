@@ -1,6 +1,6 @@
+using NUnit.Framework;
 using ChargningBoxLib.Interfaces;
 using ChargningBoxLib.Utilities;
-using NUnit.Framework
 
 namespace ChargingBoxTest
 {
