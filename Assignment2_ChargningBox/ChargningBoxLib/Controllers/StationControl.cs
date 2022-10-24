@@ -47,7 +47,6 @@ namespace ChargningBoxLib.Controllers
             rfidReader.RfidDetectedChangedEvent += HandleRfidDetectedEvent;
             _rfidReader = rfidReader;
 
-            
             _charger = charger;
             
             _state = LadeskabState.Available;
