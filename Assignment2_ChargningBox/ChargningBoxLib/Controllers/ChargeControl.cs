@@ -14,9 +14,12 @@ namespace ChargningBoxLib.Controllers
         public bool IsConnected { get; set; }
 
         // Event Variable
-        public double currentValue;
+        public double currentValue { get; private set; }
+
+        IUsbCharger _usbCharger;
 
         public void StartCharge(){
+            //Should it be display that is called here?
             Console.WriteLine("Phone is charging");
             IsConnected = true;
         }
@@ -24,16 +27,15 @@ namespace ChargningBoxLib.Controllers
             Console.WriteLine("Charging has stopped");
             IsConnected = false;
         }
-        public ChargeControl() {
+        public ChargeControl(IUsbCharger usbCharger) {
             IsConnected = false;
 
             // It is the ChargeControl that handle event from USBCharger
-            IUsbCharger usbCharger = new UsbChargerSimulator();
-            usbCharger.CurrentValueEvent += HandleCurrentEvent;
+            _usbCharger = usbCharger;
+            _usbCharger.CurrentValueEvent += HandleCurrentEvent;
         }
-        
 
-        private void HandleCurrentEvent(object sender, CurrentEventArgs e) {
+        private void HandleCurrentEvent(object? sender, CurrentEventArgs e) {
             currentValue = e.Current;
         }
     }

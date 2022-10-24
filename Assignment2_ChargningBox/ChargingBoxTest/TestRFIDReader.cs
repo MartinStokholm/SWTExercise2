@@ -10,7 +10,7 @@ namespace ChargingBoxTest
 {
     public class TestRFIDReader {
         private IRFIDReader _uut;
-        private RfidDetectedChangedEventArgs _receivedEventArgs;
+        private RfidDetectedChangedEventArgs? _receivedEventArgs;
 
         [SetUp]
         public void Setup() {
@@ -30,6 +30,11 @@ namespace ChargingBoxTest
 
         [TestCase(-1)]
         [TestCase(0)]
+        public void SetReadRFID_RfidEventSetToNewValue_NotCorrectNewRfidReceived(int newRFID) {
+            _uut.ReadRFID(newRFID);
+            Assert.That(_receivedEventArgs.RfidDetected, Is.Not.EqualTo(newRFID));
+        }
+
         [TestCase(1)]
         public void SetReadRFID_RfidEventSetToNewValue_CorrectNewRfidReceived(int newRFID) {
             _uut.ReadRFID(newRFID);

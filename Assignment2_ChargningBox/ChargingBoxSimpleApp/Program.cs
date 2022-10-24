@@ -1,15 +1,16 @@
 ﻿using ChargningBoxLib.Controllers;
 using ChargningBoxLib.Interfaces;
+using ChargningBoxLib.Simulators;
 using ChargningBoxLib.Utilities;
 using System;
 class Program
     {
         static void Main(string[] args)
-        {
+       {
 				// Assemble your system here from all the classes
             IDoor door = new Door();
             IRFIDReader rfidReader = new RFIDReader();
-            StationControl st = new StationControl(new ChargeControl(), door, new LogFile(), new Display(), rfidReader);
+            StationControl st = new(new ChargeControl(new UsbChargerSimulator()), door, new LogFile(), new Display(), rfidReader);
 
             bool finish = false;
             do

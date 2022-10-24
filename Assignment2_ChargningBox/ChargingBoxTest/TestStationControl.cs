@@ -19,15 +19,21 @@ namespace UsbSimulator.Test
         private StationControl _uut;
         private IDoor _door;
         private IRFIDReader _reader;
+        private IDisplay _display;
+        private ILogFile _logFile;
+        private IChargeControl _chargeControl;
 
         [SetUp]
         public void Setup() {
             _door = Substitute.For<IDoor>();
             _reader = Substitute.For<IRFIDReader>();
-            _uut = new StationControl(new ChargeControl(),
+            _display = Substitute.For<IDisplay>();
+            _logFile = Substitute.For<ILogFile>();
+            _chargeControl = Substitute.For<IChargeControl>();
+            _uut = new StationControl(_chargeControl,
                                       _door,
-                                      new LogFile(),
-                                      new Display(),
+                                      _logFile, 
+                                      _display,
                                       _reader);
         }
 

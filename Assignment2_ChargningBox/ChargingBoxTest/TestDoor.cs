@@ -29,6 +29,7 @@ namespace ChargingBoxTest
             Assert.That(_receivedEventArgs, Is.Not.Null);
         }
 
+        // If you test all this fails but if this is the only one the succes
         [Test]
         public void SetDoorState_DoorEventSetToLocked_EventNotFired() {
             _uut.SetDoorState(DoorState.Locked);

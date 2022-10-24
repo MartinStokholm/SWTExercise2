@@ -13,6 +13,7 @@ namespace ChargningBoxLib.Utilities
 
         public void ReadRFID(int id)
         {
+            if (id <= 0) { return; }
             OnReadRFID(new RfidDetectedChangedEventArgs { RfidDetected = id });
         }
 

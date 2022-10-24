@@ -8,6 +8,7 @@ namespace ChargningBoxLib.Interfaces
 {
     public interface IChargeControl
     {
+        public double currentValue { get; }
         bool IsConnected { get; set; }
         void StartCharge();
         void StopCharge();
