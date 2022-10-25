@@ -46,14 +46,19 @@ namespace ChargingBoxTest
         //public void ctor_currentValue() {
         //    Assert.That(_uut.currentValue, Is.EqualTo(0));
         //}
-
+        [TestCase(-1)]
+        [TestCase(0)]
         [TestCase(23)]
-        public void SetDoorState_DoorEventSetToUnlocked_EventFired(int value ) {
+        public void SetDoorState_DoorEventSetToUnlocked_EventFiredWithCorrectValue(int value ) {
             _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = value });
             Assert.That(_uut.currentValue, Is.EqualTo(value));
         }
 
-
+        [TestCase(23)]
+        public void SetDoorState_DoorEventSetToUnlocked_EventFired(int value) {
+            _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = value });
+            Assert.That(_uut.currentValue, Is.Not.EqualTo(value));
+        }
         //[Test]
         //public void SetDoorState_DoorEventSetToUnlocked_EventFired() {
         //    _uut.StartCharge();
