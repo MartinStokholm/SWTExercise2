@@ -36,15 +36,13 @@ namespace ChargningBoxLib.Utilities
             _doorState = DoorState.Unlocked;
         }
 
-        //public void UnlockDoor()
-        //{
-        //    _doorState = DoorState.Unlocked;
-        //}
+        public void UnlockDoor() {
+            _doorState = DoorState.Unlocked;
+        }
 
-        //public void LockDoor()
-        //{
-        //    _doorState = DoorState.Locked;
-        //}
+        public void LockDoor() {
+            _doorState = DoorState.Locked;
+        }
 
     }
 }

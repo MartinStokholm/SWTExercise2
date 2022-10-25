@@ -20,8 +20,8 @@ namespace ChargningBoxLib.Interfaces
 
     public interface IDoor
     {
-        //public void UnlockDoor();
-        //public void LockDoor();
+        public void UnlockDoor();
+        public void LockDoor();
         public void SetDoorState(DoorState newDoorState);
 
         event EventHandler<DoorOpenCloseEventArgs> DoorOpenCloseEvent;

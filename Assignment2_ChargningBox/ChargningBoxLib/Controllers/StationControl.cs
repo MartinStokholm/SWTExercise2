@@ -15,13 +15,12 @@ namespace ChargningBoxLib.Controllers
 
         // Her mangler flere member variable
         private LadeskabState _state;
-        private IChargeControl _charger;
-        private int _oldId;
+        private IChargeControl _charger; 
         private IDoor _door;
         private ILogFile _logfile;
         private IDisplay _display;
         private IRFIDReader _rfidReader;
-
+        private int _oldId;
 
         // Event Variables
         public DoorState _doorEvent { get;  private set; }
@@ -76,7 +75,7 @@ namespace ChargningBoxLib.Controllers
             else
             {
                 _charger.StartCharge();
-                //_door.LockDoor();
+                _door.LockDoor();
                 _oldId = id;
                 _state = LadeskabState.Locked;
                 _logfile.LogDoorLocked(id.ToString());
@@ -94,7 +93,7 @@ namespace ChargningBoxLib.Controllers
             else
             {
                 _charger.StopCharge();
-                //_door.UnlockDoor();
+                _door.UnlockDoor();
                 _logfile.LogDoorUnlocked(id.ToString());
                 _display.RemovePhone();
                 _state = LadeskabState.Available;

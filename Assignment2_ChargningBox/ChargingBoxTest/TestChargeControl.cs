@@ -49,7 +49,7 @@ namespace ChargingBox.Test
         [TestCase(-1)]
         [TestCase(0)]
         [TestCase(23)]
-        public void SetDoorState_DoorEventSetToUnlocked_EventFiredWithCorrectValue(int value ) {
+        public void SetStartCharge_ChargeEventSetToNewValue_EventFiredWithCorrectValue(int value ) {
             _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = value });
             Assert.That(_uut.currentValue, Is.EqualTo(value));
         }

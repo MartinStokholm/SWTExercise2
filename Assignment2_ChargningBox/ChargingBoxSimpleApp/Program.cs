@@ -27,9 +27,7 @@ class Program
                         break;
 
                     case 'O':
-                        // Should we take a id for which RFID onlocks the door?
                         door.SetDoorState(DoorState.Unlocked);
-                        //door.UnlockDoor();
                         // door.OnDoorOpen();
                         break;
 
