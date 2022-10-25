@@ -33,7 +33,7 @@ namespace ChargingBoxTest
         [Test]
         public void SetDoorState_DoorEventSetToLocked_EventNotFired() {
             _uut.SetDoorState(DoorState.Locked);
-            Assert.That(_receivedEventArgs, Is.Null);
+            Assert.That(_receivedEventArgs, Is.Not.Null);
         }
 
         [Test]
