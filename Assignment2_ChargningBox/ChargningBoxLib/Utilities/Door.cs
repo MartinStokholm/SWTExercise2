@@ -10,24 +10,24 @@ namespace ChargningBoxLib.Utilities
 {
 
 
-    public class Door : IDoor 
+    public class Door : IDoor
     {
-        public event EventHandler<DoorOpenCloseEventArgs>? DoorOpenCloseEvent;
-        
+        public event EventHandler<DoorEventArgs>? DoorEvent;
+
         //Open Close function
         private DoorState _doorState;
         public void SetDoorState(DoorState newDoorState)
         {
             if (newDoorState != _doorState)
             {
-                OnDoorOpenClose(new DoorOpenCloseEventArgs { DoorEvent = newDoorState });
-                _doorState = newDoorState;
+                OnDoorOpenClose(new DoorEventArgs { DoorEvent = newDoorState });
+                //_doorState = newDoorState;
             }
         }
 
-        protected virtual void OnDoorOpenClose(DoorOpenCloseEventArgs e)
+        protected virtual void OnDoorOpenClose(DoorEventArgs e)
         {
-                DoorOpenCloseEvent?.Invoke(this, e);
+            DoorEvent?.Invoke(this, e);
         }
 
         public Door()
@@ -36,11 +36,13 @@ namespace ChargningBoxLib.Utilities
             _doorState = DoorState.Unlocked;
         }
 
-        public void UnlockDoor() {
+        public void UnlockDoor()
+        {
             _doorState = DoorState.Unlocked;
         }
 
-        public void LockDoor() {
+        public void LockDoor()
+        {
             _doorState = DoorState.Locked;
         }
 

@@ -9,7 +9,7 @@ namespace ChargingBox.Test
     public class TestDoor
     {
         private IDoor _uut;
-        private DoorOpenCloseEventArgs _receivedEventArgs;
+        private DoorEventArgs _receivedEventArgs;
         
         [SetUp]
         public void Setup()
@@ -17,7 +17,7 @@ namespace ChargingBox.Test
             _uut = new Door();
             _uut.SetDoorState(DoorState.Locked);
 
-            _uut.DoorOpenCloseEvent += (o, args) => {
+            _uut.DoorEvent += (o, args) => {
                 _receivedEventArgs = args;
             };
         }

@@ -7,18 +7,19 @@ using ChargningBoxLib.Controllers;
 using ChargningBoxLib.Interfaces;
 namespace ChargningBoxLib.Utilities
 {
-    public class RFIDReader: IRFIDReader
+    public class RFIDReader : IRFIDReader
     {
-        public event EventHandler<RfidDetectedChangedEventArgs> RfidDetectedChangedEvent;
+        public event EventHandler<RfidEventArgs> RfidEvent;
 
         public void ReadRFID(int id)
         {
             if (id <= 0) { return; }
-            OnReadRFID(new RfidDetectedChangedEventArgs { RfidDetected = id });
+            OnReadRFID(new RfidEventArgs { RfidDetected = id });
         }
 
-        protected virtual void OnReadRFID(RfidDetectedChangedEventArgs e) {
-            RfidDetectedChangedEvent?.Invoke(this, e);
+        protected virtual void OnReadRFID(RfidEventArgs e)
+        {
+            RfidEvent?.Invoke(this, e);
         }
 
     }

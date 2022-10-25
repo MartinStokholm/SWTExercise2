@@ -15,7 +15,7 @@ namespace ChargningBoxLib.Controllers
 
         // Her mangler flere member variable
         private LadeskabState _state;
-        private IChargeControl _charger; 
+        private IChargeControl _charger;
         private IDoor _door;
         private ILogFile _logfile;
         private IDisplay _display;
@@ -23,23 +23,23 @@ namespace ChargningBoxLib.Controllers
         private int _oldId;
 
         // Event Variables
-        public DoorState _doorEvent { get;  private set; }
-        public int _rfidEvent { get;  private set; }
+        public DoorState _doorEvent { get; private set; }
+        public int _rfidEvent { get; private set; }
 
-        
+
         //private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
         // Her mangler constructor
         public StationControl(IChargeControl charger, IDoor door, ILogFile logfile, IDisplay display, IRFIDReader rfidReader)
         {
-            door.DoorOpenCloseEvent += HandleDoorOpenCloseEvent;
+            door.DoorEvent += HandleDoorOpenCloseEvent;
             _door = door;
 
-            rfidReader.RfidDetectedChangedEvent += HandleRfidDetectedEvent;
+            rfidReader.RfidEvent += HandleRfidDetectedEvent;
             _rfidReader = rfidReader;
 
             _charger = charger;
-            
+
             _state = LadeskabState.Available;
             _logfile = logfile;
             _display = display;
@@ -103,24 +103,26 @@ namespace ChargningBoxLib.Controllers
 
         private void CheckOpenClosed()
         {
-            if (_doorEvent == DoorState.Unlocked) { 
+            if (_doorEvent == DoorState.Unlocked)
+            {
                 DoorOpened();
                 //_state = LadeskabState.DoorOpen;
             }
-            else { 
+            else
+            {
                 DoorClosed();
                 //_state = LadeskabState.Available;
             }
         }
 
         #region Events
-        private void HandleDoorOpenCloseEvent(object sender, DoorOpenCloseEventArgs e)
+        private void HandleDoorOpenCloseEvent(object sender, DoorEventArgs e)
         {
             _doorEvent = e.DoorEvent;
             CheckOpenClosed();
         }
 
-        private void HandleRfidDetectedEvent(object sender, RfidDetectedChangedEventArgs e)
+        private void HandleRfidDetectedEvent(object sender, RfidEventArgs e)
         {
             _rfidEvent = e.RfidDetected;
             RfidDetected();

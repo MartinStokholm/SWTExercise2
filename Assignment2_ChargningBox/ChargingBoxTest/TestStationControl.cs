@@ -10,7 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace ChargingBox.Test { 
+namespace ChargingBox.Test
+{
 
     [TestFixture]
     public class TestStationControl
@@ -24,7 +25,8 @@ namespace ChargingBox.Test {
         private IChargeControl _chargeControl;
 
         [SetUp]
-        public void Setup() {
+        public void Setup()
+        {
             _door = Substitute.For<IDoor>();
             _reader = Substitute.For<IRFIDReader>();
             _display = Substitute.For<IDisplay>();
@@ -32,36 +34,39 @@ namespace ChargingBox.Test {
             _chargeControl = Substitute.For<IChargeControl>();
             _uut = new StationControl(_chargeControl,
                                       _door,
-                                      _logFile, 
+                                      _logFile,
                                       _display,
                                       _reader);
         }
 
         [TestCase(DoorState.Unlocked)]
         [TestCase(DoorState.Locked)]
-        public void DoorChanged_DifferentArguments_CurrentDoorStateIsCorrect(DoorState doorState) {
-            _door.DoorOpenCloseEvent += Raise.EventWith(new DoorOpenCloseEventArgs { DoorEvent = doorState });
-            
+        public void DoorChanged_DifferentArguments_CurrentDoorStateIsCorrect(DoorState doorState)
+        {
+            _door.DoorEvent += Raise.EventWith(new DoorEventArgs { DoorEvent = doorState });
+
             Assert.That(_uut._doorEvent, Is.EqualTo(doorState));
         }
 
         //Maybe need logic so we can have negativ RFID TAGS
         [TestCase(-1)]
         [TestCase(3)]
-        public void RFIDReaderChanged_DifferentArguments_CurrentRFIDReaderIsCorrect(int rfidTag) {
-            _reader.RfidDetectedChangedEvent += Raise.EventWith(new RfidDetectedChangedEventArgs { RfidDetected = rfidTag });
+        public void RFIDReaderChanged_DifferentArguments_CurrentRFIDReaderIsCorrect(int rfidTag)
+        {
+            _reader.RfidEvent += Raise.EventWith(new RfidEventArgs { RfidDetected = rfidTag });
 
             Assert.That(_uut._rfidEvent, Is.EqualTo(rfidTag));
         }
 
         // Test Fopr Availability change when phone is connected
         [TestCase(DoorState.Unlocked, 23)]
-        public void DoorChanged_DifferentArguments_CurrentDoorStateIs(DoorState doorState, int rfidTag) {
+        public void DoorChanged_DifferentArguments_CurrentDoorStateIs(DoorState doorState, int rfidTag)
+        {
             // Open the door
-            _door.DoorOpenCloseEvent += Raise.EventWith(new DoorOpenCloseEventArgs { DoorEvent = doorState });
+            _door.DoorEvent += Raise.EventWith(new DoorEventArgs { DoorEvent = doorState });
 
             //Scan with rfid
-            _reader.RfidDetectedChangedEvent += Raise.EventWith(new RfidDetectedChangedEventArgs { RfidDetected = rfidTag });
+            _reader.RfidEvent += Raise.EventWith(new RfidEventArgs { RfidDetected = rfidTag });
 
             // Check that the door is open and the rfid has been scanned 
             Assert.That(_uut._doorEvent, Is.EqualTo(doorState));
@@ -70,18 +75,19 @@ namespace ChargingBox.Test {
 
         // Test Fopr Availability change when phone is connected and CheckLocked
         [TestCase(DoorState.Unlocked, 23)]
-        public void DoorChanged_DifferentArguments_CurrentDoorState(DoorState doorState, int rfidTag) {
+        public void DoorChanged_DifferentArguments_CurrentDoorState(DoorState doorState, int rfidTag)
+        {
             // Open the door
-            _door.DoorOpenCloseEvent += Raise.EventWith(new DoorOpenCloseEventArgs { DoorEvent = doorState });
+            _door.DoorEvent += Raise.EventWith(new DoorEventArgs { DoorEvent = doorState });
 
             //Scan with rfid
-            _reader.RfidDetectedChangedEvent += Raise.EventWith(new RfidDetectedChangedEventArgs { RfidDetected = rfidTag });
+            _reader.RfidEvent += Raise.EventWith(new RfidEventArgs { RfidDetected = rfidTag });
 
             // Close the door
-            _door.DoorOpenCloseEvent += Raise.EventWith(new DoorOpenCloseEventArgs { DoorEvent = DoorState.Locked });
+            _door.DoorEvent += Raise.EventWith(new DoorEventArgs { DoorEvent = DoorState.Locked });
 
             // Try with the rigth rfid
-            _reader.RfidDetectedChangedEvent += Raise.EventWith(new RfidDetectedChangedEventArgs { RfidDetected = rfidTag });
+            _reader.RfidEvent += Raise.EventWith(new RfidEventArgs { RfidDetected = rfidTag });
 
             // Check that the state of the uut is 
             Assert.That(_uut._doorEvent, Is.EqualTo(DoorState.Locked));
@@ -90,18 +96,19 @@ namespace ChargingBox.Test {
 
         // Test Fopr Availability change when phone is connected and CheckLocked
         [TestCase(DoorState.Unlocked, 23)]
-        public void DoorChanged_DifferentArguments_CurrentDoor(DoorState doorState, int rfidTag) {
+        public void DoorChanged_DifferentArguments_CurrentDoor(DoorState doorState, int rfidTag)
+        {
             // Open the door
-            _door.DoorOpenCloseEvent += Raise.EventWith(new DoorOpenCloseEventArgs { DoorEvent = doorState });
+            _door.DoorEvent += Raise.EventWith(new DoorEventArgs { DoorEvent = doorState });
 
             //Scan with rfid
-            _reader.RfidDetectedChangedEvent += Raise.EventWith(new RfidDetectedChangedEventArgs { RfidDetected = rfidTag });
+            _reader.RfidEvent += Raise.EventWith(new RfidEventArgs { RfidDetected = rfidTag });
 
             // Close the door
-            _door.DoorOpenCloseEvent += Raise.EventWith(new DoorOpenCloseEventArgs { DoorEvent = DoorState.Locked });
+            _door.DoorEvent += Raise.EventWith(new DoorEventArgs { DoorEvent = DoorState.Locked });
             int wrongTag = 12;
             // Try with the wrong rfid
-            _reader.RfidDetectedChangedEvent += Raise.EventWith(new RfidDetectedChangedEventArgs { RfidDetected = wrongTag });
+            _reader.RfidEvent += Raise.EventWith(new RfidEventArgs { RfidDetected = wrongTag });
 
             // Check that the state of the uut is not changed from lock 
             Assert.That(_uut._doorEvent, Is.EqualTo(DoorState.Locked));
@@ -111,7 +118,8 @@ namespace ChargingBox.Test {
 
         // Don't know maybe the funktion is just keept private
         [Test]
-        public void test() {
+        public void test()
+        {
             _uut.RfidDetected();
         }
 

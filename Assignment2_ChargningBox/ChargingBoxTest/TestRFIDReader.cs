@@ -9,22 +9,26 @@ using System.Threading.Tasks;
 
 namespace ChargingBox.Test
 {
-    public class TestRFIDReader {
+    public class TestRFIDReader
+    {
         private IRFIDReader _uut;
-        private RfidDetectedChangedEventArgs? _receivedEventArgs;
+        private RfidEventArgs? _receivedEventArgs;
 
         [SetUp]
-        public void Setup() {
+        public void Setup()
+        {
             _uut = new RFIDReader();
 
-            _uut.RfidDetectedChangedEvent += (o, args) => {
+            _uut.RfidEvent += (o, args) =>
+            {
                 _receivedEventArgs = args;
             };
         }
 
 
         [Test]
-        public void SetReadRFID_RfidDetectedtSetToNewValue_EventFired() {
+        public void SetReadRFID_RfidDetectedtSetToNewValue_EventFired()
+        {
             _uut.ReadRFID(32);
             Assert.That(_receivedEventArgs, Is.Not.Null);
         }
@@ -37,11 +41,12 @@ namespace ChargingBox.Test
         //}
 
         [TestCase(1)]
-        public void SetReadRFID_RfidEventSetToNewValue_CorrectNewRfidReceived(int newRFID) {
+        public void SetReadRFID_RfidEventSetToNewValue_CorrectNewRfidReceived(int newRFID)
+        {
             _uut.ReadRFID(newRFID);
             Assert.That(_receivedEventArgs.RfidDetected, Is.EqualTo(newRFID));
         }
 
-   
+
     }
 }

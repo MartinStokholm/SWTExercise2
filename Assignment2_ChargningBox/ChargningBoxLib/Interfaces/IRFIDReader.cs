@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChargningBoxLib.Interfaces
 {
-     public class RfidDetectedChangedEventArgs : EventArgs
+     public class RfidEventArgs : EventArgs
     {
         public int RfidDetected { get; set; }
     }
@@ -15,6 +15,6 @@ namespace ChargningBoxLib.Interfaces
     public interface IRFIDReader
     {
         void ReadRFID(int id);
-        event EventHandler<RfidDetectedChangedEventArgs> RfidDetectedChangedEvent;
+        event EventHandler<RfidEventArgs> RfidEvent;
     }
 }

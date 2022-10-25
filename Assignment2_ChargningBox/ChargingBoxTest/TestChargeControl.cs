@@ -13,7 +13,7 @@ namespace ChargingBox.Test
         private IChargeControl _uut;
         private IUsbCharger _usbCharger;
         //private DoorOpenCloseEventArgs? _receivedEventArgs;
-        
+
         [SetUp]
         public void Setup()
         {
@@ -25,31 +25,31 @@ namespace ChargingBox.Test
         }
 
         [Test]
-        public void ctor_IsConnected() {
+        public void ctor_IsConnected()
+        {
             Assert.That(_uut.IsConnected, Is.False);
         }
 
         [Test]
-        public void SetStartCharge_StartChangeSetToTrue_CorrectNewValue() {
+        public void SetStartCharge_StartChangeSetToTrue_CorrectNewValue()
+        {
             _uut.StartCharge();
             Assert.That(_uut.IsConnected, Is.True);
         }
 
         [Test]
-        public void SetStartCharge_StartChangeSetToFalse_CorrectNewValue() {
+        public void SetStartCharge_StartChangeSetToFalse_CorrectNewValue()
+        {
             _uut.StartCharge();
             _uut.StopCharge();
             Assert.That(_uut.IsConnected, Is.False);
         }
 
-        //[Test]
-        //public void ctor_currentValue() {
-        //    Assert.That(_uut.currentValue, Is.EqualTo(0));
-        //}
         [TestCase(-1)]
         [TestCase(0)]
         [TestCase(23)]
-        public void SetStartCharge_ChargeEventSetToNewValue_EventFiredWithCorrectValue(int value ) {
+        public void SetStartCharge_ChargeEventSetToNewValue_EventFiredWithCorrectValue(int value)
+        {
             _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = value });
             Assert.That(_uut.currentValue, Is.EqualTo(value));
         }

@@ -13,7 +13,7 @@ namespace ChargningBoxLib.Interfaces
         Unlocked
     }
 
-    public class DoorOpenCloseEventArgs : EventArgs
+    public class DoorEventArgs : EventArgs
     {
         public DoorState DoorEvent { get; set; }
     }
@@ -24,7 +24,7 @@ namespace ChargningBoxLib.Interfaces
         public void LockDoor();
         public void SetDoorState(DoorState newDoorState);
 
-        event EventHandler<DoorOpenCloseEventArgs> DoorOpenCloseEvent;
+        event EventHandler<DoorEventArgs> DoorEvent;
 
     }
 }
