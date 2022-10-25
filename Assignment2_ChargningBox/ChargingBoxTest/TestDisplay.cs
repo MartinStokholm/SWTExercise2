@@ -4,7 +4,7 @@ using ChargningBoxLib.Utilities;
 using NSubstitute;
 using static ChargningBoxLib.Utilities.Door;
 
-namespace ChargingBoxTest
+namespace ChargingBox.Test
 {
     public class TestDisplay
     {
@@ -17,7 +17,7 @@ namespace ChargingBoxTest
  
         }
 
-
+        //https://www.codeproject.com/Articles/501610/Getting-Console-Output-Within-A-Unit-Test
 
     }
 }

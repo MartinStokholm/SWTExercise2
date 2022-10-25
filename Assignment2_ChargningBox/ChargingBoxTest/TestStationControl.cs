@@ -10,8 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace UsbSimulator.Test
-{
+namespace ChargingBox.Test { 
+
     [TestFixture]
     public class TestStationControl
     {
@@ -67,7 +67,34 @@ namespace UsbSimulator.Test
             Assert.That(_uut._rfidEvent, Is.EqualTo(rfidTag));
         }
 
+        // Test Fopr Availability change when phone is connected
+        [TestCase(DoorState.Unlocked, 23)]
+        public void DoorChanged_DifferentArguments_CurrentDoorStateIs(DoorState doorState, int rfidTag) {
+            _door.DoorOpenCloseEvent += Raise.EventWith(new DoorOpenCloseEventArgs { DoorEvent = doorState });
+            _reader.RfidDetectedChangedEvent += Raise.EventWith(new RfidDetectedChangedEventArgs { RfidDetected = rfidTag });
 
+            
+            Assert.That(_uut._doorEvent, Is.EqualTo(doorState));
+            Assert.That(_uut._rfidEvent, Is.EqualTo(rfidTag));
+        }
+
+        // Test Fopr Availability change when phone is connected and CheckLocked
+        [TestCase(DoorState.Unlocked, 23)]
+        public void DoorChanged_DifferentArguments_CurrentDoorState(DoorState doorState, int rfidTag) {
+            _door.DoorOpenCloseEvent += Raise.EventWith(new DoorOpenCloseEventArgs { DoorEvent = doorState });
+            _reader.RfidDetectedChangedEvent += Raise.EventWith(new RfidDetectedChangedEventArgs { RfidDetected = rfidTag });
+            _door.DoorOpenCloseEvent += Raise.EventWith(new DoorOpenCloseEventArgs { DoorEvent = DoorState.Locked });
+
+            Assert.That(_uut._doorEvent, Is.EqualTo(DoorState.Locked));
+            Assert.That(_uut._rfidEvent, Is.EqualTo(rfidTag));
+        }
+
+
+        // Don't know maybe the funktion is just keept private
+        [Test]
+        public void test() {
+            _uut.RfidDetected();
+        }
 
     }
 }

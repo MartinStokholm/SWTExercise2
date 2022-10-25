@@ -6,7 +6,7 @@ using static ChargningBoxLib.Utilities.Door;
 using ChargningBoxLib.Controllers;
 using ChargningBoxLib.Simulators;
 
-namespace ChargingBoxTest
+namespace ChargingBox.Test
 {
     public class TestChargeControl
     {
@@ -54,11 +54,11 @@ namespace ChargingBoxTest
             Assert.That(_uut.currentValue, Is.EqualTo(value));
         }
 
-        [TestCase(23)]
-        public void SetDoorState_DoorEventSetToUnlocked_EventFired(int value) {
-            _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = value });
-            Assert.That(_uut.currentValue, Is.Not.EqualTo(value));
-        }
+        //[TestCase(23)]
+        //public void SetDoorState_DoorEventSetToUnlocked_EventFired(int value) {
+        //    _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = value });
+        //    Assert.That(_uut.currentValue, Is.Not.EqualTo(value));
+        //}
         //[Test]
         //public void SetDoorState_DoorEventSetToUnlocked_EventFired() {
         //    _uut.StartCharge();

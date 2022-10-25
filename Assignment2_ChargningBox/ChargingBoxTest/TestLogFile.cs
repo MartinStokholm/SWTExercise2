@@ -4,7 +4,7 @@ using ChargningBoxLib.Utilities;
 using NSubstitute;
 using static ChargningBoxLib.Utilities.Door;
 
-namespace ChargingBoxTest
+namespace ChargingBox.Test
 {
     public class TestLogFile
     {

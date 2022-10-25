@@ -1,12 +1,13 @@
 ﻿using ChargningBoxLib.Interfaces;
 using ChargningBoxLib.Utilities;
+using NSubstitute;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChargingBoxTest
+namespace ChargingBox.Test
 {
     public class TestRFIDReader {
         private IRFIDReader _uut;
@@ -40,5 +41,7 @@ namespace ChargingBoxTest
             _uut.ReadRFID(newRFID);
             Assert.That(_receivedEventArgs.RfidDetected, Is.EqualTo(newRFID));
         }
+
+   
     }
 }
