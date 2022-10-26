@@ -15,17 +15,22 @@ namespace ChargningBoxLib.Controllers
         private const double MaxCurrent = 500.0; // mA
         private const double FullyChargedCurrent = 5; // mA
         private const double NoChargeCurrent = 0.0; // mA
-        
+
+        private enum chargeStates {
+            NoCharge, NormalCharge, FullyCharge, OverloadCharge
+        };
+        private chargeStates states;
         public bool IsConnected { get; set; }
 
         // Event Variable
         public double currentValue { get; private set; }
-
+        IDisplay _display;
         IUsbCharger _usbCharger;
 
-        public ChargeControl(IUsbCharger usbCharger) {
+        
+        public ChargeControl(IUsbCharger usbCharger, IDisplay display) {
             IsConnected = false;
-
+            _display = display;
             // It is the ChargeControl that handle event from USBCharger
             _usbCharger = usbCharger;
             _usbCharger.CurrentValueEvent += HandleCurrentEvent;
@@ -38,51 +43,39 @@ namespace ChargningBoxLib.Controllers
         
         public void StartCharge(){
             //Should it be display that is called here?
-            Console.WriteLine("Phone is charging");
             IsConnected = true;
             _usbCharger.StartCharge();
         }
         public void StopCharge(){
-            Console.WriteLine("Charging has stopped");
             IsConnected = false;
             _usbCharger.StopCharge();
         }
 
         private void CurrentStates(){
            
-            if (currentValue <= FullyChargedCurrent && currentValue > NoChargeCurrent) {
-                FullyCharged();
+            if (currentValue <= FullyChargedCurrent && currentValue > NoChargeCurrent ) {
+                if (states == chargeStates.FullyCharge) {return;}
+                states = chargeStates.FullyCharge;
+                _display.FullyCharged();
             }
             else if (currentValue > FullyChargedCurrent && currentValue <= MaxCurrent) {
-                NormalCharging();
+                if (states == chargeStates.NormalCharge) {return;}
+                states = chargeStates.NormalCharge;
+                _display.NormalCharging();
             }
             else if (currentValue >= MaxCurrent) {
-                OverloadError();
+                if (states == chargeStates.OverloadCharge) {return;}
+                states = chargeStates.OverloadCharge;
+                _display.OverloadError();
             } else {
-                NotConnected(); 
+                if (states == chargeStates.NoCharge) {return;}
+                states = chargeStates.NoCharge;
+                _display.NotConnected(); 
             }
         }
 
 
-        private void NotConnected()
-        {
-            Console.WriteLine("Phone is not connected");
-        }
         
-        private void NormalCharging()
-        {
-            Console.WriteLine("Phone is charging");
-        }
-
-        private void FullyCharged()
-        {
-            Console.WriteLine("Phone is fully charged");
-        }    
-        
-        private void OverloadError()
-        {
-            Console.WriteLine("Something went wrong. Please, disconnect phone from charging station");
-        }
 
       
 

@@ -12,13 +12,17 @@ namespace ChargingBox.Test
     {
         private IChargeControl _uut;
         private IUsbCharger _usbCharger;
+        
+        
+        private IDisplay _display;
         //private DoorOpenCloseEventArgs? _receivedEventArgs;
 
         [SetUp]
         public void Setup()
         {
             _usbCharger = Substitute.For<IUsbCharger>();
-            _uut = new ChargeControl(_usbCharger);
+            _display = Substitute.For<IDisplay>();
+            _uut = new ChargeControl(_usbCharger, _display);
             //_uut.CurrentValueEvent += (o, args) => {
             //    _receivedEventArgs = args;
             //};

@@ -10,14 +10,15 @@ class Program
         // Assemble your system here from all the classes
         IDoor door = new Door();
         IRFIDReader rfidReader = new RFIDReader();
-        StationControl st = new(new ChargeControl(new UsbChargerSimulator()), door, new LogFile(), new Display(), rfidReader);
+        IDisplay display = new Display();
+        StationControl st = new(new ChargeControl(new UsbChargerSimulator(), display), door, new LogFile(), display, rfidReader);
 
         bool finish = false;
         do
         {
             string input;
             System.Console.WriteLine("Indtast E, O, C, R: ");
-            input = Console.ReadLine();
+            input = Console.ReadLine().ToUpper();
             if (string.IsNullOrEmpty(input)) continue;
 
             switch (input[0])

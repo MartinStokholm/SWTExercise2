@@ -58,3 +58,39 @@ Log Entry : 11:37:08 AM Wednesday, October 26, 2022
 Log Entry : 11:38:44 AM Wednesday, October 26, 2022
   :Door unlocked by id: 1
 -------------------------------
+
+Log Entry : 12.47.31 onsdag den 26. oktober 2022
+  :Door locked by id: 1
+-------------------------------
+
+Log Entry : 12.50.28 onsdag den 26. oktober 2022
+  :Door locked by id: 1
+-------------------------------
+
+Log Entry : 12.51.12 onsdag den 26. oktober 2022
+  :Door locked by id: 1
+-------------------------------
+
+Log Entry : 12.51.17 onsdag den 26. oktober 2022
+  :Door unlocked by id: 1
+-------------------------------
+
+Log Entry : 12.52.12 onsdag den 26. oktober 2022
+  :Door locked by id: 1
+-------------------------------
+
+Log Entry : 12.52.43 onsdag den 26. oktober 2022
+  :Door locked by id: 1
+-------------------------------
+
+Log Entry : 12.53.11 onsdag den 26. oktober 2022
+  :Door unlocked by id: 1
+-------------------------------
+
+Log Entry : 12.55.40 onsdag den 26. oktober 2022
+  :Door locked by id: 1
+-------------------------------
+
+Log Entry : 12.55.46 onsdag den 26. oktober 2022
+  :Door unlocked by id: 1
+-------------------------------
