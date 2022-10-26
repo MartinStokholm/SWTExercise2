@@ -1,147 +1,78 @@
 @startuml
 
 
-class StationControl{
-    enum LadeSkabState
-    LadeSkabState state
-    DoorState _doorEvent
-    int _rfidEvent
-    StationControl(IChargeControl, IDoor, ILogFile, IDisplay, IRFIDReader)
-    RfidDetected()
-    CheckId(string, string)
-    DoorOpened()
-    DoorClosed()
-
-
-
-}
-class ChargeControl{
-    double CurrentValue
-    bool IsConnected
-    ChargeControl(IUsbCharger, IDisplay)
-    StartCharge()
-    StopCharge()
-
-}
-class Door {
-    enum _doorState
-    event DoorEvent
-    void UnlockDoor()
-    void LockDoor()
-    DoorState SetDoorState()
-}
-
-class Display{
-    void ConnectPhone()
-    void ScanRFID()
-    void RFIDError()
-    void ChargingBoxBusy()
-    void PhoneNotDetected()
-    void RemovePhone()
-    void NormalCharging()
-    void FullyCharged()
-    void OverloadError()
-    void NotConnected()
-    void StopCharge()
-    void StartCharge()
-
-        string ConnectPhoneString
-        string ScanRFIDString
-        string RFIDErrorString
-        string ChargingBoxBusyString
-        string PhoneNotDetectedString
-        string RemovePhoneString
-        string NormalChargingString
-        string FullyChargedString
-        string OverloadErrorString
-        string NotConnectedString
-        string StopChargeString
-        string StartChargeString
-} 
-
-class LogFile{
-    LogDoorLocked(int)
-    LogDoorUnlocked(int)
-}
-
-class RFIDReader{
-    ReadRFID(int)
-    event RfidEvent
-}
-
-class UsbChargerSimulator{
-    event CurrentValueEvent
-    StartCharge()
-    StopCharge()
-    bool Connected
-    double CurrentValue
-}
+class StationControl
+class ChargeControl
+class Door
+class Display
+class LogFile
+class RFIDReader
+class UsbChargerSimulator
 
 interface IStationControl{
-    RfidDetected()
-    CheckId(string, string)
-    DoorOpened()
-    DoorClosed()
+    RfidDetected(): void 
+    DoorOpened(): void 
+    DoorClosed(): void 
 }
 interface IChargeControl{
-    double CurrentValue
-    bool IsConnected
-    StartCharge()
-    StopCharge()
+    CurrentValue: double
+    IsConnected: bool
+    StartCharge(): void
+    StopCharge(): void
 }
 interface IDoor {
-    enum _doorState
-    event DoorEvent
-    Door()
-    UnlockDoor()
-    LockDoor()
-    DoorState SetDoorState()
+    _doorState: enum 
+    DoorEvent: event 
+    Door(): void
+    UnlockDoor(): void
+    LockDoor(): void
+    SetDoorState(): DoorState 
 }
 
 interface IDisplay {
-        ConnectPhone()
-        ScanRFID()
-        RFIDError()
-        ChargingBoxBusy()
-        PhoneNotDetected()
-        RemovePhone()
-        NormalCharging()
-        FullyCharged()
-        OverloadError()
-        NotConnected()
-        StopCharge()
-        StartCharge()
+    ConnectPhone(): void 
+    ScanRFID(): void 
+    RFIDError(): void 
+    ChargingBoxBusy(): void 
+    PhoneNotDetected(): void 
+    RemovePhone(): void 
+    NormalCharging(): void 
+    FullyCharged(): void 
+    OverloadError(): void 
+    NotConnected(): void 
+    StopCharge(): void 
+    StartCharge(): void 
 
-        string ConnectPhoneString
-        string ScanRFIDString
-        string RFIDErrorString
-        string ChargingBoxBusyString
-        string PhoneNotDetectedString
-        string RemovePhoneString
-        string NormalChargingString
-        string FullyChargedString
-        string OverloadErrorString
-        string NotConnectedString
-        string StopChargeString
-        string StartChargeString
+    ConnectPhoneString: string 
+    ScanRFIDString: string 
+    RFIDErrorString: string 
+    ChargingBoxBusyString: string 
+    PhoneNotDetectedString: string 
+    RemovePhoneString: string 
+    NormalChargingString: string 
+    FullyChargedString: string 
+    OverloadErrorString: string 
+    NotConnectedString: string 
+    StopChargeString: string 
+    StartChargeString: string 
 }
 
 
 interface ILogFile{
-    LogDoorLocked(id)
-    LogDoorUnlocked(id)
+    LogDoorLocked(id): void
+    LogDoorUnlocked(id): void
 }
 
 interface IRFIDReader{
-    ReadRFID(int)
-    event RfidEvent
+    ReadRFID(int): void
+    RfidEvent: event
 }
 interface IUsbCharger{
-    event CurrentValueEvent
-    StartCharge()
-    StopCharge()
-    bool Connected
-    double CurrentValue
+    CurrentValueEvent: event
+    StartCharge(): void
+    StopCharge(): void
+    Connected: bool
+    CurrentValue: double
 }
 
 enum DoorState{
@@ -154,6 +85,23 @@ enum LadeSkabState{
     Locked
     DoorOpen
 }
+
+class EventArgs{
+    
+}
+
+class RfidEventArgs{
+    RfidDetected: int
+}
+
+class CurrentEventArgs{
+    Current: double
+}
+
+class DoorEventArgs{
+    DoorState: DoorState
+}
+
 
 
 StationControl .u.|> IStationControl
@@ -173,6 +121,15 @@ StationControl --> IRFIDReader
 ChargeControl --> IUsbCharger
 ChargeControl --> IDisplay
 
+RfidEventArgs -u-|> EventArgs
+CurrentEventArgs -u-|> EventArgs
+DoorEventArgs -u-|> EventArgs
 
+IDoor --> DoorEventArgs
+IRFIDReader --> RfidEventArgs
+IUsbCharger --> CurrentEventArgs
+
+IDoor --> DoorState
+IStationControl --> LadeSkabState
 
 @enduml
