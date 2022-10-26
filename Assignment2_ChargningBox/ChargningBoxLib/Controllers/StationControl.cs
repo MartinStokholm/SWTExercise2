@@ -1,4 +1,4 @@
-﻿using ChargningBoxLib.Interfaces;
+using ChargningBoxLib.Interfaces;
 //using Ladeskab.Interfaces;
 
 namespace ChargningBoxLib.Controllers
