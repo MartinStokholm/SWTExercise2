@@ -33,6 +33,13 @@ namespace ChargingBox.Test
             Assert.That(_receivedEventArgs, Is.Not.Null);
         }
 
+        [Test]
+        public void SetReadRFID_RfidDetectedtSetToNewValue_EventNotFired()
+        {
+            _uut.ReadRFID(-1);
+            Assert.That(_receivedEventArgs, Is.Null);
+        }
+
         //[TestCase(-1)]
         //[TestCase(0)]
         //public void SetReadRFID_RfidEventSetToNewValue_NotCorrectNewRfidReceived(int newRFID) {
