@@ -18,3 +18,43 @@ Log Entry : 12:52:53 PM Monday, October 24, 2022
 Log Entry : 12:57:00 PM Monday, October 24, 2022
   :Door locked by id: 123123
 -------------------------------
+
+Log Entry : 10:24:40 AM Wednesday, October 26, 2022
+  :Door locked by id: 123123
+-------------------------------
+
+Log Entry : 10:24:48 AM Wednesday, October 26, 2022
+  :Door unlocked by id: 123123
+-------------------------------
+
+Log Entry : 11:01:14 AM Wednesday, October 26, 2022
+  :Door locked by id: 1
+-------------------------------
+
+Log Entry : 11:10:28 AM Wednesday, October 26, 2022
+  :Door locked by id: 1
+-------------------------------
+
+Log Entry : 11:13:47 AM Wednesday, October 26, 2022
+  :Door locked by id: 1
+-------------------------------
+
+Log Entry : 11:29:54 AM Wednesday, October 26, 2022
+  :Door locked by id: 1
+-------------------------------
+
+Log Entry : 11:34:02 AM Wednesday, October 26, 2022
+  :Door locked by id: 1
+-------------------------------
+
+Log Entry : 11:36:47 AM Wednesday, October 26, 2022
+  :Door locked by id: 1
+-------------------------------
+
+Log Entry : 11:37:08 AM Wednesday, October 26, 2022
+  :Door locked by id: 1
+-------------------------------
+
+Log Entry : 11:38:44 AM Wednesday, October 26, 2022
+  :Door unlocked by id: 1
+-------------------------------

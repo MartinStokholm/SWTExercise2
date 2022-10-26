@@ -1,0 +1,10 @@
+@startuml
+class StationControl
+{
+    RfidDetected()
+    Availablility()
+    CheckLocked()
+    CheckOpenClosed()
+    nice cock bro 
+}
+@enduml

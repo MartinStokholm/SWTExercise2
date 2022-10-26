@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,9 +32,9 @@ namespace ChargningBoxLib.Utilities
 
         public Door()
         {
-
-            _doorState = DoorState.Unlocked;
-        }
+            SetDoorState(DoorState.Locked);
+            
+        }                
 
         public void UnlockDoor()
         {

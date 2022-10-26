@@ -1,4 +1,4 @@
-﻿using ChargningBoxLib.Controllers;
+using ChargningBoxLib.Controllers;
 using ChargningBoxLib.Interfaces;
 using ChargningBoxLib.Simulators;
 using ChargningBoxLib.Utilities;
