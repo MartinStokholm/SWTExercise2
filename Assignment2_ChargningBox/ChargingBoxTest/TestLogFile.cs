@@ -11,95 +11,93 @@ namespace ChargingBox.Test
     public class TestLogFile
     {
         private ILogFile _uut;
-        private TextWriter _sw;
-        //private var mockFileSystem = new Mock<IFileSystem>();
-        //private var fs = mockFileSystem.Object;
-        //var mockFileSystem = new Mock<IFileSystem>();
+
 
         [SetUp]
         public void Setup()
         {
             _uut = new LogFile();
-            _sw = new StringWriter();
-            Console.SetOut(_sw);
+        }
+        //Jenkins can't find the file
+
+
+
+
+        [Test]
+        public void LogDoorLocked_SaveToFile_LoadFromFile_CheckValueIsEqual()
+        {
+            // Save to file
+            int id = 23;
+            _uut.LogDoorLocked(id.ToString());
+
+            // efsf
+            string firstString = $"Log Entry : {DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()}";
+            string secondString = $"  :Door locked by id: {id}";
+            string thridString = "-------------------------------";
+            string[] actualString = { firstString, secondString, thridString };
+
+            // Load from file
+            var list = new List<String>();
+            var fileStream = new FileStream(@".\log.txt", FileMode.Open, FileAccess.Read);
+            using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
+            {
+                string line;
+                while ((line = streamReader.ReadLine()) != null)
+                {
+                    list.Add(line);
+                }
+            }
+
+            int length = list.Count;
+            string[] lines = { list[length - 3], list[length - 2], list[length - 1] };
+
+
+            Assert.That(actualString, Is.EqualTo(lines));
+
         }
 
+        [Test]
+        public void LogDoorUnlocked_SaveToFile_LoadFromFile_CheckValueIsEqual()
+        {
+            // Save to file
+            int id = 23;
+            _uut.LogDoorUnlocked(id.ToString());
 
-        //[Test]
-        //public void LogDoorLocked_FileExits()
-        //{
-        //    var text = File.ReadAllText(@".\log.txt", Encoding.UTF8);
+            // efsf
+            string firstString = $"Log Entry : {DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()}";
+            string secondString = $"  :Door unlocked by id: {id}";
+            string thridString = "-------------------------------";
+            string[] actualString = { firstString, secondString, thridString };
 
-        //    Assert.That(text, Is.Not.Null);
+            // Load from file
+            var list = new List<String>();
+            var fileStream = new FileStream(@".\log.txt", FileMode.Open, FileAccess.Read);
+            using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
+            {
+                string line;
+                while ((line = streamReader.ReadLine()) != null)
+                {
+                    list.Add(line);
+                }
+            }
 
-        //}
-
-
-        //[Test]
-        //public void LogDoorLocked_SaveToFile_LoadFromFile_CheckValueIsEqual()
-        //{
-        //    // Save to file
-        //    int id = 23;
-        //    _uut.LogDoorLocked(id.ToString());
-
-        //    // efsf
-        //    string firstString = $"Log Entry : {DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()}";
-        //    string secondString = $"  :Door locked by id: {id}";
-        //    string thridString = "-------------------------------";
-        //    string[] actualString = { firstString, secondString, thridString };
-
-        //    // Load from file
-        //    var list = new List<String>();
-        //    var fileStream = new FileStream(@".\log.txt", FileMode.Open, FileAccess.Read);
-        //    using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
-        //    {
-        //        string line;
-        //        while ((line = streamReader.ReadLine()) != null)
-        //        {
-        //            list.Add(line);
-        //        }
-        //    }
-
-        //    int length = list.Count;
-        //    string[] lines = { list[length - 3], list[length - 2], list[length - 1] };
+            int length = list.Count;
+            string[] lines = { list[length - 3], list[length - 2], list[length - 1] };
 
 
-        //    Assert.That(actualString, Is.EqualTo(lines));
+            Assert.That(actualString, Is.EqualTo(lines));
 
-        //}
+        }
 
-        //[Test]
-        //public void LogDoorUnlocked_SaveToFile_LoadFromFile_CheckValueIsEqual()
-        //{
-        //    // Save to file
-        //    int id = 23;
-        //    _uut.LogDoorUnlocked(id.ToString());
+        [Test]
+        public void LogDoorLocked_FileExits()
+        {
+            var text = File.ReadAllText(@".\log.txt", Encoding.UTF8);
 
-        //    // efsf
-        //    string firstString = $"Log Entry : {DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()}";
-        //    string secondString = $"  :Door unlocked by id: {id}";
-        //    string thridString = "-------------------------------";
-        //    string[] actualString = { firstString, secondString, thridString };
+            Assert.That(text, Is.Not.Null);
 
-        //    // Load from file
-        //    var list = new List<String>();
-        //    var fileStream = new FileStream(@".\log.txt", FileMode.Open, FileAccess.Read);
-        //    using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
-        //    {
-        //        string line;
-        //        while ((line = streamReader.ReadLine()) != null)
-        //        {
-        //            list.Add(line);
-        //        }
-        //    }
+        }
 
-        //    int length = list.Count;
-        //    string[] lines = { list[length - 3], list[length - 2], list[length - 1] };
-
-
-        //    Assert.That(actualString, Is.EqualTo(lines));
-
-        //}
 
     }
 }
