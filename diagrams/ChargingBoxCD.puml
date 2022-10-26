@@ -1,10 +1,39 @@
 @startuml
+
+
 class StationControl
-{
-    RfidDetected()
-    Availablility()
-    CheckLocked()
-    CheckOpenClosed()
-    nice cock bro 
-}
+class ChargeControl
+class Door 
+class Display 
+class LogFile
+class RFIDReader
+class UsbChargerSimulator
+
+interface IStationControl
+interface IChargeControl
+interface IDoor 
+interface IDisplay 
+interface ILogFile
+interface IRFIDReader
+interface IUsbCharger
+
+
+StationControl .u.|> IStationControl
+ChargeControl .u.|> IChargeControl
+Door .u.|> IDoor
+Display .u.|> IDisplay
+LogFile .u.|> ILogFile
+RFIDReader .u.|> IRFIDReader
+UsbChargerSimulator .u.|> IUsbCharger
+
+StationControl --> IChargeControl
+StationControl --> IDisplay
+StationControl --> ILogFile
+StationControl --> IDoor
+StationControl --> IRFIDReader
+
+ChargeControl --> IUsbCharger
+ChargeControl --> IDisplay
+
+
 @enduml
