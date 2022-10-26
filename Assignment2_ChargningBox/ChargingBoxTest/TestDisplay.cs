@@ -116,7 +116,7 @@ namespace ChargingBox.Test
             _uut.StopCharge();
             var output = sw.ToString();
 
-            Assert.That(output, Is.EqualTo(_uut.StopCharge + "\r\n"));
+            Assert.That(output, Is.EqualTo(_uut.StopChargeString + "\r\n"));
         }
 
 
