@@ -18,7 +18,6 @@ namespace ChargingBox.Test
             _uut = new Display();
             sw = new StringWriter();
             Console.SetOut(sw);
-
         }
 
         [Test]
