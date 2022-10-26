@@ -1,0 +1,61 @@
+@startuml
+actor Bruger as A
+participant Display 
+participant Door 
+participant RFIDReader
+participant StationControl
+participant ChargeControl
+actor LogFile
+
+
+A->> Door: Bruger åbner døren
+Door->>StationControl: DoorOpened()
+activate StationControl
+StationControl->Display: Vis "Connect Phone"
+deactivate StationControl
+A->> ChargeControl: Bruger Tilslutter telefon
+A ->> Door: Bruger lukker døren
+Door->> StationControl: DoorClosed()
+activate StationControl
+StationControl-> Display: Vis "Charging box is closed. Use your RFID tag to open. "
+deactivate StationControl
+
+loop
+    A->>RFIDReader: Bruger holder sit RFID tag til læseren
+    RFIDReader->>StationControl: RfidDetected()
+    activate StationControl
+    StationControl->ChargeControl: IsConnected()
+    activate ChargeControl
+    ChargeControl-->>StationControl: False
+    StationControl->Display: Vis "Phone is not connected. Try again."
+end
+ChargeControl-->>StationControl: True
+deactivate ChargeControl
+StationControl->ChargeControl: StartCharge()
+StationControl->Door:LockDoor()
+StationControl->LogFile: LogDoorLocked(id)
+StationControl->Display: Vis "Charging Box is not available right now or in use. Try again later."
+deactivate StationControl
+
+loop
+    A->>RFIDReader: Bruger holder sit RFID tag til læseren
+    RFIDReader->>StationControl: RfidDetected()
+    activate StationControl
+    StationControl->StationControl: CheckId(OldId, Id)
+    activate StationControl
+    StationControl-->>StationControl: False
+    deactivate StationControl
+    StationControl->Display: Vis "Wrong RFID tag."
+end loop 
+    activate StationControl
+    StationControl->StationControl: CheckId(OldId, Id)
+    activate StationControl
+    StationControl-->>StationControl: True
+    deactivate StationControl
+    StationControl -> ChargeControl: StopCharge()
+    StationControl -> Door: UnlockDoor()
+    StationControl -> LogFile: LogDoorUnlocked(id)
+    StationControl->Display: Vis "Remove phone from charging box and close the door."
+    deactivate StationControl
+
+@enduml
