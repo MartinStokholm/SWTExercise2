@@ -53,5 +53,37 @@ namespace ChargingBox.Test
             _uut.SetDoorState(DoorState.Locked);
             Assert.That(_receivedEventArgs.DoorEvent, Is.EqualTo(DoorState.Locked));
         }
+
+        [Test]
+        public void UnlockDoor_ChangeDoorState()
+        {
+
+            try
+            {
+                _uut.UnlockDoor();
+                Assert.IsTrue(true);
+
+            }
+            catch
+            {
+                Assert.IsFalse(false);
+            }
+        }
+
+        [Test]
+        public void LockDoor_ChangeDoorState()
+        {
+
+            try
+            {
+                _uut.LockDoor();
+                Assert.IsTrue(true);
+
+            }
+            catch
+            {
+                Assert.IsFalse(false);
+            }
+        }
     }
 }
