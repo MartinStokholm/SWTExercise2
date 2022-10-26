@@ -13,7 +13,11 @@ namespace ChargningBoxLib.Utilities
 
         public void ReadRFID(int id)
         {
-            if (id <= 0) { return; }
+
+            if (id <= 0)
+            {
+                throw new ArgumentOutOfRangeException("RFID Tag is invalid. (Out Of Range)");
+            }
             OnReadRFID(new RfidEventArgs { RfidDetected = id });
         }
 

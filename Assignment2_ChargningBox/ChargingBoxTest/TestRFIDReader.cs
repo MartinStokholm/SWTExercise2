@@ -1,5 +1,6 @@
 ﻿using ChargningBoxLib.Interfaces;
 using ChargningBoxLib.Utilities;
+using Microsoft.VisualStudio.CodeCoverage;
 using NSubstitute;
 using System;
 using System.Collections.Generic;
@@ -36,8 +37,7 @@ namespace ChargingBox.Test
         [Test]
         public void SetReadRFID_RfidDetectedtSetToNewValue_EventNotFired()
         {
-            _uut.ReadRFID(-1);
-            Assert.That(_receivedEventArgs, Is.Null);
+            Assert.Throws<ArgumentOutOfRangeException>(() => _uut.ReadRFID(-1));
         }
 
         //[TestCase(-1)]
