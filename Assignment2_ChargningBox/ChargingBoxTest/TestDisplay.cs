@@ -119,7 +119,7 @@ namespace ChargingBox.Test
             Assert.That(output, Is.EqualTo(_uut.StopChargeString + "\r\n"));
         }
 
-
+        [Test]
         public void StartCharge()
         {
             _uut.StartCharge();
@@ -129,9 +129,6 @@ namespace ChargingBox.Test
         }
 
 
-
-        //https://www.codeproject.com/Articles/501610/Getting-Console-Output-Within-A-Unit-Test
-        //https://makolyte.com/csharp-how-to-unit-test-code-that-reads-and-writes-to-the-console/
 
     }
 }
