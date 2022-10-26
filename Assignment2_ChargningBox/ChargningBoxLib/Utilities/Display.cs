@@ -92,13 +92,13 @@ namespace ChargningBoxLib.Utilities
         private string _scanRFIDString = "Charging box is closed. Use your RFID tag to open.";
         private string _rfidErrorString = "Wrong RFID tag.";
         private string _chargingBoxBusyString = "Charging Box is not available right now or in use. Try again later.";
-        public string _phoneNotDetectedString = "Phone is not connected. Try again.";
-        public string _removePhoneString = "Remove phone from charging box and close the door.";
-        public string _normalChargingString = "Phone is charging";
-        public string _fullyChargedString = "Phone is fully charged";
-        public string _overloadErrorString = "Something went wrong. Please, disconnect phone from charging station";
-        public string _notConnectedString = "Phone is disconnected";
-        public string _stopChargeString = "Charging has stopped"; 
-        public string _startChargeString = "Phone is charging";
+        private string _phoneNotDetectedString = "Phone is not connected. Try again.";
+        private string _removePhoneString = "Remove phone from charging box and close the door.";
+        private string _normalChargingString = "Phone is charging";
+        private string _fullyChargedString = "Phone is fully charged";
+        private string _overloadErrorString = "Something went wrong. Please, disconnect phone from charging station";
+        private string _notConnectedString = "Phone is disconnected";
+        private string _stopChargeString = "Charging has stopped"; 
+        private string _startChargeString = "Phone is charging";
     }
 }
