@@ -5,11 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ChargningBoxLib.Interfaces;
 
-
 namespace ChargningBoxLib.Utilities
 {
-
-
     public class Door : IDoor
     {
         public event EventHandler<DoorEventArgs>? DoorEvent;
