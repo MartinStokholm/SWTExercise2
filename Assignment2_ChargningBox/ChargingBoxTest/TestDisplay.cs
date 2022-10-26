@@ -65,7 +65,7 @@ namespace ChargingBox.Test
             Assert.That(output, Is.EqualTo(_uut.PhoneNotDetectedString + "\r\n"));
         }
 
-
+        [Test]
         public void RemovePhone_ConsoleWriteLine_ComparesToString()
         {
             _uut.RemovePhone();
@@ -74,7 +74,7 @@ namespace ChargingBox.Test
             Assert.That(output, Is.EqualTo(_uut.RemovePhoneString + "\r\n"));
         }
 
-
+        [Test]
         public void NormalCharging_ConsoleWriteLine_ComparesToString()
         {
             _uut.NormalCharging();
@@ -83,7 +83,7 @@ namespace ChargingBox.Test
             Assert.That(output, Is.EqualTo(_uut.NormalChargingString + "\r\n"));
         }
 
-
+        [Test]
         public void FullyCharged_ConsoleWriteLine_ComparesToString()
         {
             _uut.FullyCharged();
@@ -92,7 +92,7 @@ namespace ChargingBox.Test
             Assert.That(output, Is.EqualTo(_uut.FullyChargedString + "\r\n"));
         }
 
-
+        [Test]
         public void OverloadError_ConsoleWriteLine_ComparesToString()
         {
             _uut.OverloadError();
@@ -101,7 +101,7 @@ namespace ChargingBox.Test
             Assert.That(output, Is.EqualTo(_uut.OverloadErrorString + "\r\n"));
         }
 
-
+        [Test]
         public void NotConnected_ConsoleWriteLine_ComparesToString()
         {
             _uut.NotConnected();
@@ -110,7 +110,7 @@ namespace ChargingBox.Test
             Assert.That(output, Is.EqualTo(_uut.NotConnectedString + "\r\n"));
         }
 
-
+        [Test]
         public void StopCharge()
         {
             _uut.StopCharge();
