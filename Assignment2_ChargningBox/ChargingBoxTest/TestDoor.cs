@@ -39,11 +39,12 @@ namespace ChargingBox.Test
             Assert.That(_receivedEventArgs, Is.Not.Null);
         }
 
-        //[Test]
-        //public void SetDoorState_DoorEventSetToUnlocked_CorrectNewDoorState() {
-        //    _uut.SetDoorState(DoorState.Unlocked);
-        //    Assert.That(_receivedEventArgs.DoorEvent, Is.EqualTo(DoorState.Unlocked));
-        //}
+        [Test]
+        public void SetDoorState_DoorEventSetToUnlocked_CorrectNewDoorState()
+        {
+            _uut.SetDoorState(DoorState.Unlocked);
+            Assert.That(_receivedEventArgs.DoorEvent, Is.EqualTo(DoorState.Unlocked));
+        }
 
         [Test]
         public void SetDoorState_DoorEventSetToLocked_CorrectNewDoorState()
