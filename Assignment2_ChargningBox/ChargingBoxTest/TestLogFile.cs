@@ -89,14 +89,19 @@ namespace ChargingBox.Test
 
         }
 
-        //[Test]
-        //public void LogDoorLocked_FileExits()
-        //{
-        //    var text = File.ReadAllText(@".\log.txt", Encoding.UTF8);
+        [Test]
+        public void LogDoorLocked_FileExits()
+        {
+            // Jenkins need to save file for the creates of the file
+            // The file is delete, when test is done, so to load file 
+            // we have to create a new beforehand 
+            int id = 23;
+            _uut.LogDoorUnlocked(id.ToString());
+            var text = File.ReadAllText(@".\log.txt", Encoding.UTF8);
 
-        //    Assert.That(text, Is.Not.Null);
+            Assert.That(text, Is.Not.Null);
 
-        //}
+        }
 
 
     }
