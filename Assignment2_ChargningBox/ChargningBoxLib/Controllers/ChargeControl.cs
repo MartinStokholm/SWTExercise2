@@ -35,6 +35,7 @@ namespace ChargningBoxLib.Controllers
             _display = display;
             // It is the ChargeControl that handle event from USBCharger
             _usbCharger = usbCharger;
+            states = chargeStates.NoCharge;
             _usbCharger.CurrentValueEvent += HandleCurrentEvent;
         }
 

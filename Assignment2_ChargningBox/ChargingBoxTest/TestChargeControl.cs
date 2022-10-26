@@ -12,8 +12,8 @@ namespace ChargingBox.Test
     {
         private IChargeControl _uut;
         private IUsbCharger _usbCharger;
-        
-        
+
+
         private IDisplay _display;
         //private DoorOpenCloseEventArgs? _receivedEventArgs;
 
@@ -49,24 +49,41 @@ namespace ChargingBox.Test
             Assert.That(_uut.IsConnected, Is.False);
         }
 
-        [TestCase(-1)]
-        [TestCase(0)]
-        [TestCase(23)]
-        public void SetStartCharge_ChargeEventSetToNewValue_EventFiredWithCorrectValue(int value)
+        [TestCase(5.01)]
+        [TestCase(100)]
+        [TestCase(500)]
+        public void StartChargeNormalCharge_ChargeEventSetToNewValue_EventFiredWithCorrectValue(double value)
         {
             _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = value });
             Assert.That(_uut.currentValue, Is.EqualTo(value));
         }
 
-        //[TestCase(23)]
-        //public void SetDoorState_DoorEventSetToUnlocked_EventFired(int value) {
-        //    _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = value });
-        //    Assert.That(_uut.currentValue, Is.Not.EqualTo(value));
-        //}
-        //[Test]
-        //public void SetDoorState_DoorEventSetToUnlocked_EventFired() {
-        //    _uut.StartCharge();
-        //    Assert.That(_uut., Is.Not.Null);
-        //}
+
+
+        [TestCase(500.01)]
+        [TestCase(750)]
+        public void StartChargeOverCharge_ChargeEventSetToNewValue_EventFiredWithCorrectValue(double value)
+        {
+            _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = value });
+            Assert.That(_uut.currentValue, Is.EqualTo(value));
+        }
+
+        [TestCase(0)]
+        public void StartChargeNoCharge_ChargeEventSetToNewValue_EventFiredWithCorrectValue(double value)
+        {
+            _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = value });
+            Assert.That(_uut.currentValue, Is.EqualTo(value));
+        }
+
+        [TestCase(0.01)]
+        [TestCase(5)]
+        public void StartChargeFullyCharge_ChargeEventSetToNewValue_EventFiredWithCorrectValue(double value)
+        {
+            _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = value });
+            Assert.That(_uut.currentValue, Is.EqualTo(value));
+        }
+
+
+
     }
 }

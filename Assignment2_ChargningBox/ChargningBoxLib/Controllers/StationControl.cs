@@ -14,7 +14,7 @@ namespace ChargningBoxLib.Controllers
         };
 
         // Her mangler flere member variable
-        public LadeskabState _state { get; private set;}
+        public LadeskabState _state { get; private set; }
         private IChargeControl _charger;
         private IDoor _door;
         private ILogFile _logfile;
@@ -76,6 +76,7 @@ namespace ChargningBoxLib.Controllers
             {
                 _charger.StartCharge();
                 _door.LockDoor();
+                _display.ChargingBoxBusy();
                 _oldId = id;
                 _state = LadeskabState.Locked;
                 _logfile.LogDoorLocked(id.ToString());
