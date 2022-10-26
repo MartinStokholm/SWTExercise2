@@ -21,7 +21,7 @@ namespace ChargningBoxLib.Utilities
             if (newDoorState != _doorState)
             {
                 OnDoorOpenClose(new DoorEventArgs { DoorEvent = newDoorState });
-                //_doorState = newDoorState;
+                _doorState = newDoorState;
             }
         }
 
