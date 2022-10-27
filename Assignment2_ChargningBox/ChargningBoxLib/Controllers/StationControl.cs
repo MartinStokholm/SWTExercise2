@@ -76,7 +76,6 @@ namespace ChargningBoxLib.Controllers
             {
                 _charger.StartCharge();
                 _door.LockDoor();
-                _display.ChargingBoxBusy();
                 _oldId = id;
                 _state = LadeskabState.Locked;
                 _logfile.LogDoorLocked(id.ToString());

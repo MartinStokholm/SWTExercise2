@@ -63,6 +63,7 @@ namespace ChargningBoxLib.Controllers
             {
                 states = chargeStates.FullyCharge;
                 _display.FullyCharged();
+                StopCharge();
             }
             else if (checkNormalCharge())
             {
@@ -73,6 +74,7 @@ namespace ChargningBoxLib.Controllers
             {
                 states = chargeStates.OverloadCharge;
                 _display.OverloadError();
+                StopCharge();
             }
             else if (checkNoCharge())
             {
