@@ -6,7 +6,7 @@ namespace ChargningBoxLib.Controllers
     public class StationControl
     {
         // Enum med tilstande ("states") svarende til tilstandsdiagrammet for klassen
-        public enum LadeskabState
+        private enum LadeskabState
         {
             Available,
             Locked,
@@ -14,7 +14,7 @@ namespace ChargningBoxLib.Controllers
         };
 
         // Her mangler flere member variable
-        public LadeskabState _state { get; private set; }
+        private LadeskabState _state;
         private IChargeControl _charger;
         private IDoor _door;
         private ILogFile _logfile;
