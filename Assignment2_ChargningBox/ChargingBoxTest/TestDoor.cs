@@ -62,7 +62,6 @@ namespace ChargingBox.Test
             {
                 _uut.UnlockDoor();
                 Assert.IsTrue(true);
-
             }
             catch
             {

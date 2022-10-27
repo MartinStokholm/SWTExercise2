@@ -62,6 +62,7 @@ namespace ChargingBox.Test
         public void StartChargeOverCharge_ChargeEventSetToNewValue_EventFiredWithCorrectValue(double value)
         {
             _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = value });
+            _usbCharger.Received(1).StopCharge();
             Assert.That(_uut.currentValue, Is.EqualTo(value));
         }
 
@@ -81,7 +82,7 @@ namespace ChargingBox.Test
         public void StartChargeFullyCharge_ChargeEventSetToNewValue_EventFiredWithCorrectValue(double value)
         {
             _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = value });
-
+            _usbCharger.Received(1).StopCharge();
             Assert.That(_uut.currentValue, Is.EqualTo(value));
         }
 
