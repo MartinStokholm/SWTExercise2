@@ -56,6 +56,7 @@ namespace ChargingBox.Test
             _reader.RfidEvent += Raise.EventWith(new RfidEventArgs { RfidDetected = rfidTag });
 
             Assert.That(_uut._rfidEvent, Is.EqualTo(rfidTag));
+            _display.Received(1).ConnectPhone();
         }
 
         // Test For Availability change when phone is connected
@@ -64,11 +65,16 @@ namespace ChargingBox.Test
         {
             // Open the door
             _door.DoorEvent += Raise.EventWith(new DoorEventArgs { DoorEvent = doorState });
-            
+            _display.Received(1).ConnectPhone();
+
             //Scan with rfid
             _reader.RfidEvent += Raise.EventWith(new RfidEventArgs { RfidDetected = rfidTag });
-            _display.Received(1).ConnectPhone();
-            
+            _chargeControl.Received(1).StartCharge();
+            _door.Received(1).LockDoor();
+            _display.Received(0).PhoneNotDetected();
+            _logFile.Received(1).LogDoorLocked(23.ToString());
+            _display.Received(1).ScanRFID();
+
             // Check that the door is open and the rfid has been scanned 
             Assert.That(_uut._doorEvent, Is.EqualTo(doorState));
             Assert.That(_uut._rfidEvent, Is.EqualTo(rfidTag));
@@ -80,15 +86,28 @@ namespace ChargingBox.Test
         {
             // Open the door
             _door.DoorEvent += Raise.EventWith(new DoorEventArgs { DoorEvent = doorState });
+            _display.Received(1).ConnectPhone();
 
             //Scan with rfid
             _reader.RfidEvent += Raise.EventWith(new RfidEventArgs { RfidDetected = rfidTag });
+            _chargeControl.Received(1).StartCharge();
+            _door.Received(1).LockDoor();
+            _display.Received(0).PhoneNotDetected();
+            _logFile.Received(1).LogDoorLocked(23.ToString());
+            _display.Received(1).ScanRFID();
+            Assert.That(_uut._rfidEvent, Is.EqualTo(rfidTag));
 
             // Close the door
             _door.DoorEvent += Raise.EventWith(new DoorEventArgs { DoorEvent = DoorState.Locked });
 
-            // Try with the rigth rfid
+            //int wrongTag = 12;
+            // Try with the wrong rfid
             _reader.RfidEvent += Raise.EventWith(new RfidEventArgs { RfidDetected = rfidTag });
+            _display.Received(0).RFIDError();
+            _chargeControl.Received(1).StopCharge();
+            _door.Received(1).UnlockDoor();
+            _logFile.Received(1).LogDoorUnlocked(23.ToString());
+            _display.Received(1).RemovePhone();
 
             // Check that the state of the uut is 
             Assert.That(_uut._doorEvent, Is.EqualTo(DoorState.Locked));
@@ -101,27 +120,32 @@ namespace ChargingBox.Test
         {
             // Open the door
             _door.DoorEvent += Raise.EventWith(new DoorEventArgs { DoorEvent = doorState });
+            _display.Received(1).ConnectPhone();
 
             //Scan with rfid
             _reader.RfidEvent += Raise.EventWith(new RfidEventArgs { RfidDetected = rfidTag });
+            _chargeControl.Received(1).StartCharge();
+            _door.Received(1).LockDoor();
+            _display.Received(0).PhoneNotDetected();
+            _logFile.Received(1).LogDoorLocked(23.ToString());
+            _display.Received(1).ScanRFID();
+            Assert.That(_uut._rfidEvent, Is.EqualTo(rfidTag));
 
             // Close the door
             _door.DoorEvent += Raise.EventWith(new DoorEventArgs { DoorEvent = DoorState.Locked });
+
             int wrongTag = 12;
             // Try with the wrong rfid
             _reader.RfidEvent += Raise.EventWith(new RfidEventArgs { RfidDetected = wrongTag });
+            _display.Received(1).RFIDError();
+            _chargeControl.Received(0).StopCharge();
+            _door.Received(0).UnlockDoor();
+            _logFile.Received(0).LogDoorUnlocked(23.ToString());
+            _display.Received(0).RemovePhone();
 
             // Check that the state of the uut is not changed from lock 
             Assert.That(_uut._doorEvent, Is.EqualTo(DoorState.Locked));
             //Assert.That(_uut._rfidEvent, Is.Not.EqualTo(wrongTag));
-        }
-
-
-        // Don't know maybe the funktion is just keept private
-        [Test]
-        public void test()
-        {
-            _uut.RfidDetected();
         }
 
     }
