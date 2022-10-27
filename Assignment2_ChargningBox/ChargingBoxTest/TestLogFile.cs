@@ -99,7 +99,7 @@ namespace ChargingBox.Test
             _uut.LogDoorUnlocked(id.ToString());
             var text = File.ReadAllText(@".\log.txt", Encoding.UTF8);
 
-            Assert.That(text, Is.Not.Null);
+            Assert.That(File.Exists(@".\log.txt"));
 
         }
 
