@@ -58,23 +58,23 @@ namespace ChargingBox.Test
             Assert.That(_uut._rfidEvent, Is.EqualTo(rfidTag));
         }
 
-        // Test Fopr Availability change when phone is connected
+        // Test For Availability change when phone is connected
         [TestCase(DoorState.Unlocked, 23)]
         public void DoorChanged_DifferentArguments_CurrentDoorStateIs(DoorState doorState, int rfidTag)
         {
             // Open the door
             _door.DoorEvent += Raise.EventWith(new DoorEventArgs { DoorEvent = doorState });
-            _door.Received(1).UnlockDoor();
-
+            
             //Scan with rfid
             _reader.RfidEvent += Raise.EventWith(new RfidEventArgs { RfidDetected = rfidTag });
-
+            _display.Received(1).ConnectPhone();
+            
             // Check that the door is open and the rfid has been scanned 
             Assert.That(_uut._doorEvent, Is.EqualTo(doorState));
             Assert.That(_uut._rfidEvent, Is.EqualTo(rfidTag));
         }
 
-        // Test Fopr Availability change when phone is connected and CheckLocked
+        // Test For Availability change when phone is connected and CheckLocked
         [TestCase(DoorState.Unlocked, 23)]
         public void DoorChanged_DifferentArguments_CurrentDoorState(DoorState doorState, int rfidTag)
         {

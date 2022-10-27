@@ -59,7 +59,6 @@ namespace ChargningBoxLib.Controllers
 
         private void CurrentStates()
         {
-
             if (checkFullyCharge())
             {
                 states = chargeStates.FullyCharge;
