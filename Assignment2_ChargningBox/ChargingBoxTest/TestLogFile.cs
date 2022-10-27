@@ -34,7 +34,7 @@ namespace ChargingBox.Test
             string firstString = $"Log Entry : {DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()}";
             string secondString = $"  :Door locked by id: {id}";
             string thridString = "-------------------------------";
-            string[] actualString = { firstString, secondString, thridString };
+            string[] fakeString = { firstString, secondString, thridString };
 
             // Load from file
             var list = new List<String>();
@@ -52,7 +52,7 @@ namespace ChargingBox.Test
             string[] lines = { list[length - 3], list[length - 2], list[length - 1] };
 
 
-            Assert.That(actualString, Is.EqualTo(lines));
+            Assert.That(fakeString, Is.EqualTo(lines));
 
         }
 
