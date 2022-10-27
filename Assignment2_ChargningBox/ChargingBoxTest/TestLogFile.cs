@@ -18,11 +18,7 @@ namespace ChargingBox.Test
         {
             _uut = new LogFile();
         }
-        //Jenkins can't find the file
-
-
-
-
+       
         [Test]
         public void LogDoorLocked_SaveToFile_LoadFromFile_CheckValueIsEqual()
         {
