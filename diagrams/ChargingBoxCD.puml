@@ -9,6 +9,7 @@ class LogFile
 class RFIDReader
 class UsbChargerSimulator
 
+
 interface IStationControl{
     RfidDetected(): void 
     DoorOpened(): void 
@@ -21,7 +22,6 @@ interface IChargeControl{
     StopCharge(): void
 }
 interface IDoor {
-    _doorState: enum 
     DoorEvent: event 
     Door(): void
     UnlockDoor(): void
@@ -80,11 +80,6 @@ enum DoorState{
     Unlocked
 }
 
-enum LadeSkabState{
-    Available
-    Locked
-    DoorOpen
-}
 
 class EventArgs{
     
@@ -119,17 +114,16 @@ StationControl --> IDoor
 StationControl --> IRFIDReader
 
 ChargeControl --> IUsbCharger
-ChargeControl --> IDisplay
+ChargeControl -l-> IDisplay
 
-RfidEventArgs -u-|> EventArgs
-CurrentEventArgs -u-|> EventArgs
-DoorEventArgs -u-|> EventArgs
+RfidEventArgs -d-|> EventArgs
+CurrentEventArgs -d-|> EventArgs
+DoorEventArgs -d-|> EventArgs
 
 IDoor --> DoorEventArgs
 IRFIDReader --> RfidEventArgs
 IUsbCharger --> CurrentEventArgs
 
 IDoor --> DoorState
-IStationControl --> LadeSkabState
 
 @enduml

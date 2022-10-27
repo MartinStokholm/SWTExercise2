@@ -64,6 +64,7 @@ namespace ChargingBox.Test
         {
             // Open the door
             _door.DoorEvent += Raise.EventWith(new DoorEventArgs { DoorEvent = doorState });
+            _door.Received(1).UnlockDoor();
 
             //Scan with rfid
             _reader.RfidEvent += Raise.EventWith(new RfidEventArgs { RfidDetected = rfidTag });
