@@ -75,13 +75,11 @@ namespace ChargingBox.Test
             Assert.That(_uut.currentValue, Is.EqualTo(value));
         }
 
-        [TestCase(0.01)]
-        [TestCase(5)]
+        [TestCase(0.0)]
         public void StartChargeFullyCharge_ChargeEventSetToNewValue_EventFiredWithCorrectValue(double value)
         {
             // Raise event so we are charging
             _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = 500 });
-            _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = 750 });
             // Now we can stop charging 
             _usbCharger.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs { Current = value });
             Assert.That(_uut.currentValue, Is.EqualTo(value));
