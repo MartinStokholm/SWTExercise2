@@ -48,15 +48,29 @@ namespace ChargingBox.Test
             Assert.That(_uut._doorEvent, Is.EqualTo(doorState));
         }
 
-        //Maybe need logic so we can have negativ RFID TAGS
-        [TestCase(-1)]
         [TestCase(3)]
         public void RFIDReaderChanged_DifferentArguments_CurrentRFIDReaderIsCorrect(int rfidTag)
         {
             _reader.RfidEvent += Raise.EventWith(new RfidEventArgs { RfidDetected = rfidTag });
-
+            _chargeControl.Received(0).StartCharge();
+            _door.Received(0).LockDoor();
+            _display.Received(1).PhoneNotDetected();
+            _logFile.Received(0).LogDoorLocked(23.ToString());
+            _display.Received(0).ScanRFID();
             Assert.That(_uut._rfidEvent, Is.EqualTo(rfidTag));
-            _display.Received(1).ConnectPhone();
+
+        }
+
+        [TestCase(-1)]
+        public void RFIDReaderChanged_DifferentArguments_CurrentRFIDReaderIsWrong(int rfidTag)
+        {
+            _reader.RfidEvent += Raise.EventWith(new RfidEventArgs { RfidDetected = rfidTag });
+            _chargeControl.Received(0).StartCharge();
+            _door.Received(0).LockDoor();
+            _display.Received(1).PhoneNotDetected();
+            _logFile.Received(0).LogDoorLocked(23.ToString());
+            _display.Received(0).ScanRFID();
+            Assert.That(_uut._rfidEvent, Is.EqualTo(rfidTag));
         }
 
         // Test For Availability change when phone is connected
